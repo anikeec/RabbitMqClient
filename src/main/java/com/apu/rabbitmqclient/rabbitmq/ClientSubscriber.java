@@ -5,7 +5,6 @@
  */
 package com.apu.rabbitmqclient.rabbitmq;
 
-import com.apu.rabbitmqclient.SymbolCounter;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rabbitmq.client.AMQP;

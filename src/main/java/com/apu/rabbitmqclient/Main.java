@@ -25,9 +25,18 @@ import java.util.logging.Logger;
  */
 public class Main {
     
-    private static int AMOUNT_OF_PEACES = 5;
+    private static final int FILEPATH_PTR = 0;
+    private static final int AMOUNT_OF_PEACES_PTR = 1;
     
     public static void main(String[] args) throws IOException, TimeoutException {
+        
+        if(args.length < 2) {
+            System.out.println("Error - enter full filepath and amount of peaces as arguments.");
+            return;
+        }
+        
+        int amountOfPeaces = Integer.parseInt(args[AMOUNT_OF_PEACES_PTR]);
+        String filePath = args[FILEPATH_PTR];
         
         ClientSubscriber subscriber = 
                 new ClientSubscriber(RabbitMqSettings.TO_CLIENT_EXCHANGE_NAME, 
@@ -41,20 +50,20 @@ public class Main {
                                     RabbitMqSettings.TO_SERVER_QUEUE_NAME);        
 
         SymbolCounter sc = new SymbolCounter();
-        String text = FileUtils.getTextFromFile("d:/Projects_java/RabbitMqClient/_add/War and peace.txt");
+        String text = FileUtils.getTextFromFile(filePath);
         
         System.out.println("\nTest source text(for ability to compare in the future):");   
         System.out.println(sc.getStringResults(sc.countSymbols(text)));        
         
         Long startTime = new Date().getTime();
         
-        List<String> textParts = TextUtils.sliceText(text, AMOUNT_OF_PEACES);
+        List<String> textParts = TextUtils.sliceText(text, amountOfPeaces);
         for(String str:textParts) {
             publisher.publishMessage(str);
             
         }
         
-        while(subscriber.getResultList().size() < AMOUNT_OF_PEACES) {
+        while(subscriber.getResultList().size() < amountOfPeaces) {
             try {
                 Thread.sleep(50);
             } catch (InterruptedException ex) {
