@@ -11,6 +11,14 @@ package com.apu.rabbitmqclient.rabbitmq;
  */
 public class RabbitMqSettings {
     
+    public static final String TO_SERVER_QUEUE_NAME = "to_server_queue";
+    public static final String TO_CLIENT_QUEUE_NAME = "to_client_queue";
+    
+    public static final String TO_SERVER_EXCHANGE_NAME = "toServerExchange";
+    public static final String TO_CLIENT_EXCHANGE_NAME = "toClientExchange";
+    
+    public static final String ROUTING_KEY = "testRoute";
+    
     public static String USERNAME = "guest";
     public static String PASSWORD = "guest";
     public static String VIRTUAL_HOST = "/";
