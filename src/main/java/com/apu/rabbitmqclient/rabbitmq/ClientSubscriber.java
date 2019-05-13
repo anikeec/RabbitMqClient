@@ -16,6 +16,7 @@ import com.rabbitmq.client.Consumer;
 import com.rabbitmq.client.DefaultConsumer;
 import com.rabbitmq.client.Envelope;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -65,7 +66,7 @@ public class ClientSubscriber {
                                         AMQP.BasicProperties properties, 
                                         byte[] body) throws IOException {
 
-                    String message = new String(body, "UTF-8");
+                    String message = new String(body, StandardCharsets.UTF_8);
                     
                     String jsonInput = "{\"key\": \"value\"}";
                     ObjectMapper mapper = new ObjectMapper();

@@ -10,6 +10,7 @@ import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.MessageProperties;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.concurrent.TimeoutException;
 
 /**
@@ -39,7 +40,10 @@ public class ClientPublisher {
                 Channel channel = connection.createChannel()) {
                         
             channel.queueDeclare(queueName, true, false, false, null);            
-            channel.basicPublish(exchangeName, routingKey, MessageProperties.PERSISTENT_TEXT_PLAIN, message.getBytes());
+            channel.basicPublish(exchangeName, 
+                                routingKey, 
+                                MessageProperties.PERSISTENT_TEXT_PLAIN, 
+                                message.getBytes(StandardCharsets.UTF_8));
             System.out.println(" [x] Sent '" + message.length() + "'");
             
         }
