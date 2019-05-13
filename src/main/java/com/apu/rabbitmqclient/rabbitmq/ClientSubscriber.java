@@ -72,7 +72,6 @@ public class ClientSubscriber {
 
                     String message = new String(body, StandardCharsets.UTF_8);
                     
-                    String jsonInput = "{\"key\": \"value\"}";
                     ObjectMapper mapper = new ObjectMapper();
                     TypeReference<HashMap<Character, Integer>> typeRef 
                       = new TypeReference<HashMap<Character, Integer>>() {};

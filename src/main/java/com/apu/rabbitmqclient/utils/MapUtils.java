@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.apu.rabbitmqclient;
+package com.apu.rabbitmqclient.utils;
 
 import java.util.HashMap;
 import java.util.Iterator;

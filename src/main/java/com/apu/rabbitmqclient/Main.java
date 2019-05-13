@@ -5,6 +5,9 @@
  */
 package com.apu.rabbitmqclient;
 
+import com.apu.rabbitmqclient.utils.FileUtils;
+import com.apu.rabbitmqclient.utils.TextUtils;
+import com.apu.rabbitmqclient.utils.MapUtils;
 import com.apu.rabbitmqclient.rabbitmq.ClientPublisher;
 import com.apu.rabbitmqclient.rabbitmq.ClientSubscriber;
 import com.apu.rabbitmqclient.rabbitmq.RabbitMqSettings;
@@ -37,9 +40,8 @@ public class Main {
                                     RabbitMqSettings.ROUTING_KEY, 
                                     RabbitMqSettings.TO_SERVER_QUEUE_NAME);        
 
-        FileLoader fl = new FileLoader();
         SymbolCounter sc = new SymbolCounter();
-        String text = fl.getText("d:/Projects_java/RabbitMqClient/_add/War and peace.txt");
+        String text = FileUtils.getTextFromFile("d:/Projects_java/RabbitMqClient/_add/War and peace.txt");
         
         System.out.println("\nTest source text(for ability to compare in the future):");   
         System.out.println(sc.getStringResults(sc.countSymbols(text)));        

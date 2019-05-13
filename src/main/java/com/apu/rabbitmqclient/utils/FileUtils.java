@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.apu.rabbitmqclient;
+package com.apu.rabbitmqclient.utils;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -14,9 +14,9 @@ import java.io.IOException;
  *
  * @author apu
  */
-public class FileLoader {
+public class FileUtils {
     
-    public String getText(String filename) throws IOException {
+    public static String getTextFromFile(String filename) throws IOException {
         StringBuilder sb = new StringBuilder();
         try {
             BufferedReader reader = 
