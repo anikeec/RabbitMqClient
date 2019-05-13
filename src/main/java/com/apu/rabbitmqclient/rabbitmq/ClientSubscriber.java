@@ -35,6 +35,10 @@ public class ClientSubscriber {
     private final String routingKey;
     private final String queueName;
     private List<Map<Character, Integer>> mapList = new ArrayList<>();
+    
+    private ConnectionFactory factory;
+    private Connection conn;
+    private Channel channel;
 
     public ClientSubscriber(String exchangeName, String routingKey, String queueName) {
         this.exchangeName = exchangeName;
@@ -47,13 +51,13 @@ public class ClientSubscriber {
     }
     
     public void run() throws IOException, TimeoutException {
-        ConnectionFactory factory = new ConnectionFactory();
+        factory = new ConnectionFactory();
         factory.setUsername(RabbitMqSettings.USERNAME);
         factory.setPassword(RabbitMqSettings.PASSWORD);
         factory.setVirtualHost(RabbitMqSettings.VIRTUAL_HOST);
         factory.setHost(RabbitMqSettings.HOST);
         factory.setPort(RabbitMqSettings.PORT);
-        Connection conn = factory.newConnection();
+        conn = factory.newConnection();
         Channel channel = conn.createChannel();
         boolean durable = true;
         channel.exchangeDeclare(exchangeName, "direct", durable);
@@ -79,6 +83,25 @@ public class ClientSubscriber {
              }
         };
         channel.basicConsume(queueName, true, consumer);
+    }
+    
+    public void close() {
+        if(channel != null) { 
+            try {
+                channel.close();
+            } catch (IOException ex) {
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
+            } catch (TimeoutException ex) {
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if(conn != null) {
+            try {
+                conn.close();
+            } catch (IOException ex) {
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
+            }
+        }        
     }
     
 }

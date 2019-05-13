@@ -12,6 +12,8 @@ import com.rabbitmq.client.MessageProperties;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.TimeoutException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -44,7 +46,7 @@ public class ClientPublisher {
                                 routingKey, 
                                 MessageProperties.PERSISTENT_TEXT_PLAIN, 
                                 message.getBytes(StandardCharsets.UTF_8));
-            System.out.println(" [x] Sent '" + message.length() + "'");
+            System.out.println("Sent " + message.length() + " symbols.");
             
         }
     }

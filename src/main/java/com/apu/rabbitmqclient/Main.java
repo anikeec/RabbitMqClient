@@ -13,6 +13,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeoutException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -39,6 +41,7 @@ public class Main {
         SymbolCounter sc = new SymbolCounter();
         String text = fl.getText("d:/Projects_java/RabbitMqClient/_add/War and peace.txt");
         
+        System.out.println("\nTest source text(for ability to compare in the future):");   
         System.out.println(sc.getStringResults(sc.countSymbols(text)));        
         
         Long startTime = new Date().getTime();
@@ -46,10 +49,16 @@ public class Main {
         List<String> textParts = TextUtils.sliceText(text, AMOUNT_OF_PEACES);
         for(String str:textParts) {
             publisher.publishMessage(str);
-            System.out.println("Sent " + str.length() + " symbols.");
+            
         }
         
-        while(subscriber.getResultList().size() < AMOUNT_OF_PEACES) {};
+        while(subscriber.getResultList().size() < AMOUNT_OF_PEACES) {
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        };
         System.out.println("All maps are received.");
         
         MapUtils mapUtils = new MapUtils();
@@ -58,6 +67,7 @@ public class Main {
             resultMap = mapUtils.addMap(map);
         }
         String result = sc.getStringResults(resultMap);
+        System.out.println("\nResult map:");   
         System.out.println(result);
         
         Long finishTime = new Date().getTime();
@@ -65,6 +75,8 @@ public class Main {
         System.out.println("Operation time:" + (finishTime - startTime) + " ms.");
         
         System.out.println("All maps are received.");
+        
+        subscriber.close();
     }
     
 }
