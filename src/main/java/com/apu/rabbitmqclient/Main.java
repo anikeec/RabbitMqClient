@@ -26,16 +26,16 @@ import java.util.logging.Logger;
 public class Main {
     
     private static final int FILEPATH_PTR = 0;
-    private static final int AMOUNT_OF_PEACES_PTR = 1;
+    private static final int AMOUNT_OF_PIECES_PTR = 1;
     
     public static void main(String[] args) throws IOException, TimeoutException {
         
         if(args.length < 2) {
-            System.out.println("Error - enter full filepath and amount of peaces as arguments.");
+            System.out.println("Error - enter full filepath and amount of pieces as arguments.");
             return;
         }
         
-        int amountOfPeaces = Integer.parseInt(args[AMOUNT_OF_PEACES_PTR]);
+        int amountOfPieces = Integer.parseInt(args[AMOUNT_OF_PIECES_PTR]);
         String filePath = args[FILEPATH_PTR];
         
         ClientSubscriber subscriber = 
@@ -57,13 +57,13 @@ public class Main {
         
         Long startTime = new Date().getTime();
         
-        List<String> textParts = TextUtils.sliceText(text, amountOfPeaces);
+        List<String> textParts = TextUtils.sliceText(text, amountOfPieces);
         for(String str:textParts) {
             publisher.publishMessage(str);
             
         }
         
-        while(subscriber.getResultList().size() < amountOfPeaces) {
+        while(subscriber.getResultList().size() < amountOfPieces) {
             try {
                 Thread.sleep(50);
             } catch (InterruptedException ex) {
